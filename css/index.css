@@ -21,3 +21,8 @@ p{
 div{
   display: block;
 }
+.after{
+  width: 100%;
+  color: yellow;
+  background: blue;
+}
