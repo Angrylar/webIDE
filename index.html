@@ -3,31 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<style>
-			.content{
-				display: flex;
-				flex-direction: row;
-			}
-			i{
-				display: inline-block;
-				width: 40px;
-				background: #dddddd;
-				text-align: center;
-				color: #ffffff;
-			}
-			p{
-				display: inline-block;
-				flex: 1;
-				margin: 0;
-				padding: 0;
-				padding-left: 10px;
-				background: #aaaaaa;
-				color: #dedede;
-			}
-			div{
-				display: block;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
 	</head>
 	<body>
 		<div class="content">
@@ -36,48 +12,8 @@
     </div>
 		<input class="getMsg" type="button" value="showMsg" />
 	</body>
+	<script type="text/javascript" src="js/index.js"></script>
 	<script>
-
 	// {"a":"1","b":"2","c":"3","d":"4","e":"5","f":"6","g":"7"}
-		var $div = document.getElementsByTagName('p')[0];
-		var $getMsg = document.getElementsByClassName('getMsg')[0];
-		var $iNum = document.getElementsByTagName('i')[0];
-		var lineNum = $div.getElementsByTagName('div');
-		$getMsg.onclick = function (){
-			try {
-				console.log(JSON.parse($div.innerText))
-			} catch (e) {
-				alert('请你特么输入正确的json格式');
-				console.log(e);
-			} finally {
-				console.log('finally')
-			}
-
-		}
-		var count = 1;
-		var oldLineNum = 0;
-		var currentLineNum = 0;
-		var lineNumArr = [1];
-
-		$div.addEventListener('keyup',function(ev){
-			oldLineNum = currentLineNum;
-			currentLineNum = lineNum.length;
-			if((oldLineNum - currentLineNum) > 0){
-				for (let i = 0; i < Math.abs(oldLineNum - currentLineNum); i++) {
-					count--;
-					lineNumArr.pop();
-				}
-				$iNum.innerHTML = lineNumArr.join('<br/>');
-			} else if ((oldLineNum - currentLineNum) == 0){
-				// console.log('do nothing');
-			} else {
-				for (let i = 0; i < Math.abs(oldLineNum - currentLineNum); i++) {
-					count++;
-					lineNumArr.push(count);
-				}
-				$iNum.innerHTML = lineNumArr.join('<br/>');
-				$getMsg.innerHTML += "<br/>"
-			}
-		},false)
 	</script>
 </html>

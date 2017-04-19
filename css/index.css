@@ -1,0 +1,23 @@
+.content{
+  display: flex;
+  flex-direction: row;
+}
+i{
+  display: inline-block;
+  width: 40px;
+  background: #dddddd;
+  text-align: center;
+  color: #ffffff;
+}
+p{
+  display: inline-block;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+  background: #aaaaaa;
+  color: #dedede;
+}
+div{
+  display: block;
+}
