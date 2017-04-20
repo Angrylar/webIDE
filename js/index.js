@@ -12,6 +12,9 @@ var obj = {};
 var s = JSON.stringify(obj)
 var after = s.replace(/\{/g,"{<br/>")
 console.log(s)
+for (var val in obj){
+  console.log(val);
+}
 
 
   var $div = document.getElementsByTagName('p')[0];

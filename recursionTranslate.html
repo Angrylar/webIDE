@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      var counter = 0;
+          $rootScope.recursionTranslate = function (obj) {
+            for (var key in obj) {
+              if (obj[key].en == undefined){
+                counter++;
+                //递归一下
+//                  			这里为什么必须用方括号才能成功，不能用点方法？
+                $rootScope.recursionTranslate(obj[key]);
+              } else {
+                if (obj[key].en == '') {
+//                  				这里需要调用一下接口实现翻译
+                  var result = getTranslateEnglish(obj[key]);
+                } else {
+                  // 什么都不做
+                }
+              }
+            }
+          }
+
+        function getTranslateEnglish(obj) {
+          var language = obj.ch
+          var appid = '20170420000045268';
+          var query = language;
+          var salt = (new Date).getTime();
+          var key = '1tVs9w7z3o_tWr4yooO7';
+
+          var from = 'zh';
+          var to = 'en';
+          var str1 = appid + query + salt + key;
+          var sign = MD5(str1);
+
+          var strResult = "";
+          $.ajax({
+            type:"get",
+            dataType: 'jsonp',
+            url:"http://api.fanyi.baidu.com/api/trans/vip/translate",
+            async:false,
+            data: {
+              q: query,
+              appid: appid,
+                  salt: salt,
+                  from: from,
+                  to: to,
+                  sign: sign
+            },
+            success:function(resp) {
+              if (resp.error_code == 52000) {
+                strResult = decodeURI(resp.trans_result[0].dst);
+              } else if (resp.error_code == 52001) {
+                console.log("请求超时",resp);
+              } else if (resp.error_code == 52002) {
+                console.log("系统错误",resp);
+              } else if (resp.error_code == 52003) {
+                console.log("未授权用户",resp);
+              } else if (resp.error_code == 54000) {
+                console.log("缺少必填参数",resp);
+              } else if (resp.error_code == 58000) {
+                console.log("客户端IP非法",resp);
+              } else if (resp.error_code == 54001) {
+                console.log("签名错误",resp);
+              } else if (resp.error_code == 54003) {
+                console.log("访问频率受限",resp);
+              } else if (resp.error_code == 58001) {
+                console.log("译文语言方向不支持",resp);
+              } else if (resp.error_code == 54004) {
+                console.log("账户余额不足",resp);
+              } else if (resp.error_code == 54005) {
+                console.log("长query请求频繁",resp);
+              } else {
+                console.log(decodeURI(resp.trans_result[0].dst))
+                strResult = decodeURI(resp.trans_result[0].dst);
+                obj.en = strResult;
+              }
+            },
+            error:function(resp){
+              console.log("err",resp);
+            }
+          });
+        }
+    </script>
+  </body>
+</html>
