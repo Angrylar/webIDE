@@ -30,20 +30,39 @@ console.log(s)
 
       var contentStringMin = $div.innerText.replace(/\{/g, "{<br/>");
           contentStringMin = contentStringMin.replace(/\}/g,"<br/>}");
-          contentStringMin = contentStringMin.replace(/\[/g, "{<br/>");
-          contentStringMin = contentStringMin.replace(/\]/g,"<br/>}");
+          contentStringMin = contentStringMin.replace(/\[/g, "[<br/>");
+          contentStringMin = contentStringMin.replace(/\]/g,"<br/>]");
           contentStringMin = contentStringMin.replace(/\,/g,",<br/>");
       // $after.innerHTML = contentStringMin;
-      console.log(contentStringMin.split('{<br/>'))
+      console.log(contentStringMin.split('{<br/>').length)
       for (let i = 0; i < contentStringMin.split('{<br/>').length; i++) {
         if (i != contentStringMin.split('{<br/>').length-1) {
           temp += contentStringMin.split('{<br/>')[i] + '{<br/>' +tabmargin;
         } else {
           temp += contentStringMin.split('{<br/>')[i];
         }
-        tabmargin += tabmargin;
+        tabmargin = tabmargin + '&nbsp;&nbsp;';
       }
+      contentStringMin = temp;
+      temp="";
+      var tabmarginstring = "";
+      var tabmarginArr = tabmargin.split(';');
+      console.log(tabmarginArr)
+      tabmarginArr.pop();
+      tabmarginArr.pop();
+      tabmarginArr.pop();
+      tabmarginArr.pop();
+      tabmarginArr.pop();
+      for (let i = 0; i < contentStringMin.split('<br/>}').length; i++) {
+        console.log(1)
+        tabmarginstring = tabmarginArr.join(';');
+        temp += contentStringMin.split('<br/>}')[i] + '<br/>'+ tabmarginstring +'}';
 
+        tabmarginArr.pop();
+        tabmarginArr.pop();
+      }
+      console.log(temp);
+      console.log(tabmarginArr)
       //
       // console.log('temp',temp)
       // tabmargin = '&nbsp;&nbsp;';
