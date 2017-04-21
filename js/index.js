@@ -12,9 +12,6 @@ var obj = {};
 var s = JSON.stringify(obj)
 var after = s.replace(/\{/g,"{<br/>")
 console.log(s)
-for (var val in obj){
-  console.log(val);
-}
 
 
   var $div = document.getElementsByTagName('p')[0];
@@ -29,60 +26,84 @@ for (var val in obj){
     // console.log(tabmargin.length)
     try {
       console.log(JSON.parse($div.innerText))
-      var temp = '';
+                                              // var temp = '';
+                                              // var contentStringMin = $div.innerText.replace(/\{/g, "{<br/>");
+                                              //     contentStringMin = contentStringMin.replace(/\}/g,"<br/>}");
+                                              //     contentStringMin = contentStringMin.replace(/\[/g, "[<br/>");
+                                              //     contentStringMin = contentStringMin.replace(/\]/g,"<br/>]");
+                                              //     contentStringMin = contentStringMin.replace(/\,/g,",<br/>");
+                                              // // $after.innerHTML = contentStringMin;
+                                              // console.log(contentStringMin.split('{<br/>').length)
+                                              // for (let i = 0; i < contentStringMin.split('{<br/>').length; i++) {
+                                              //   if (i != contentStringMin.split('{<br/>').length-1) {
+                                              //     temp += contentStringMin.split('{<br/>')[i] + '{<br/>' +tabmargin;
+                                              //   } else {
+                                              //     temp += contentStringMin.split('{<br/>')[i];
+                                              //   }
+                                              //   tabmargin = tabmargin + '&nbsp;&nbsp;';
+                                              // }
+                                              // contentStringMin = temp;
+                                              // temp="";
+                                              // var tabmarginstring = "";
+                                              // var tabmarginArr = tabmargin.split(';');
+                                              // console.log(tabmarginArr)
+                                              // tabmarginArr.pop();
+                                              // tabmarginArr.pop();
+                                              // tabmarginArr.pop();
+                                              // tabmarginArr.pop();
+                                              // tabmarginArr.pop();
+                                              // for (let i = 0; i < contentStringMin.split('<br/>}').length; i++) {
+                                              //   console.log(1)
+                                              //   tabmarginstring = tabmarginArr.join(';');
+                                              //   temp += contentStringMin.split('<br/>}')[i] + '<br/>'+ tabmarginstring +'}';
+                                              //
+                                              //   tabmarginArr.pop();
+                                              //   tabmarginArr.pop();
+                                              // }
+                                              // console.log(temp);
+                                              // console.log(tabmarginArr)
+                                              //
+                                              //
+                                              // $after.innerHTML = temp;\\
+      var getMsgChar = $div.innerText;
+      var charArr = [];
 
-      var contentStringMin = $div.innerText.replace(/\{/g, "{<br/>");
-          contentStringMin = contentStringMin.replace(/\}/g,"<br/>}");
-          contentStringMin = contentStringMin.replace(/\[/g, "[<br/>");
-          contentStringMin = contentStringMin.replace(/\]/g,"<br/>]");
-          contentStringMin = contentStringMin.replace(/\,/g,",<br/>");
-      // $after.innerHTML = contentStringMin;
-      console.log(contentStringMin.split('{<br/>').length)
-      for (let i = 0; i < contentStringMin.split('{<br/>').length; i++) {
-        if (i != contentStringMin.split('{<br/>').length-1) {
-          temp += contentStringMin.split('{<br/>')[i] + '{<br/>' +tabmargin;
-        } else {
-          temp += contentStringMin.split('{<br/>')[i];
+      var spaceFunc = (num) => {
+        var space = '';
+        for (let i = 0; i < num; i++) {
+          space += '&nbsp;&nbsp;&nbsp;&nbsp;';
         }
-        tabmargin = tabmargin + '&nbsp;&nbsp;';
+        return space;
       }
-      contentStringMin = temp;
-      temp="";
-      var tabmarginstring = "";
-      var tabmarginArr = tabmargin.split(';');
-      console.log(tabmarginArr)
-      tabmarginArr.pop();
-      tabmarginArr.pop();
-      tabmarginArr.pop();
-      tabmarginArr.pop();
-      tabmarginArr.pop();
-      for (let i = 0; i < contentStringMin.split('<br/>}').length; i++) {
-        console.log(1)
-        tabmarginstring = tabmarginArr.join(';');
-        temp += contentStringMin.split('<br/>}')[i] + '<br/>'+ tabmarginstring +'}';
 
-        tabmarginArr.pop();
-        tabmarginArr.pop();
+      var traversal = (str) => {
+        var counter = 0;
+        for (let i = 0; i < str.length; i++) {
+          console.log(str.charAt(i));
+          if (str.charAt(i) == '[' || str.charAt(i) == '{') {
+            counter++;
+            charArr.push(str.charAt(i));
+            charArr.push('<br/>');
+            charArr.push(spaceFunc(counter));
+          } else if (str.charAt(i) == ']' || str.charAt(i) == '}') {
+            counter--;
+            charArr.push('<br/>');
+            charArr.push(spaceFunc(counter));
+            charArr.push(str.charAt(i));
+          } else if (str.charAt(i) == ',') {
+            charArr.push(str.charAt(i));
+            charArr.push('<br/>');
+            charArr.push(spaceFunc(counter));
+          } else {
+            charArr.push(str.charAt(i));
+          }
+        }
+        return charArr.join("");
+
       }
-      console.log(temp);
-      console.log(tabmarginArr)
-      //
-      // console.log('temp',temp)
-      // tabmargin = '&nbsp;&nbsp;';
-      // var temper = temp.split("").reverse().join("");
-      // for (let i = 0; i < temp.split('</rb>}').length; i++) {
-      //   if (i != temp.split('</rb>}').length-1) {
-      //     temper += temp.split('</rb>}')[i] + '</rb>}' +tabmargin;
-      //   } else {
-      //     temper += temp.split('</rb>}')[i];
-      //   }
-      //   tabmargin += tabmargin;
-      // }
-      // temp = temp.split("").reverse().join("");
-      // console.log(temp)
+      $after.innerHTML = traversal(getMsgChar);
 
 
-      $after.innerHTML = temp;
     } catch (e) {
       alert('请你特么输入正确的json格式');
       console.log(e);
