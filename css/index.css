@@ -2,10 +2,13 @@
   display: flex;
   flex-direction: row;
 }
+.content div{
+  /*border-bottom: 1px dotted #dcdcdc;*/
+}
 i{
   display: inline-block;
   width: 40px;
-  background: #dddddd;
+  background: #34495e;
   text-align: center;
   color: #ffffff;
 }
@@ -15,7 +18,7 @@ p{
   margin: 0;
   padding: 0;
   padding-left: 10px;
-  background: #aaaaaa;
+  background: #2c3e50;
   color: #dedede;
 }
 div{

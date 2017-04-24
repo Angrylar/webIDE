@@ -5,9 +5,14 @@
     <title></title>
   </head>
   <body>
+  	<script type="text/javascript" src="js/jquery-1.12.3.js" ></script>
+  	<script type="text/javascript" src="js/md5translate.js" ></script>
     <script>
       var counter = 0;
-          $rootScope.recursionTranslate = function (obj) {
+      var result = '';
+      
+      
+          var recursionTranslate = function (obj) {
             for (var key in obj) {
               if (obj[key].en == undefined){
                 counter++;
@@ -17,7 +22,7 @@
               } else {
                 if (obj[key].en == '') {
 //                  				这里需要调用一下接口实现翻译
-                  var result = getTranslateEnglish(obj[key]);
+                  result = getTranslateEnglish(obj[key]);
                 } else {
                   // 什么都不做
                 }
@@ -85,6 +90,16 @@
             }
           });
         }
+        var myObj = {};
+        	myObj.acc = {};
+        	myObj.acc.ch = "我的名字";
+        	myObj.acc.en = "";
+        	myObj.bcc = {};
+        	myObj.bcc.ch = "你好世界";
+        	myObj.bcc.en = "";
+        console.log(myObj);
+        
+        recursionTranslate(myObj);
     </script>
   </body>
 </html>
